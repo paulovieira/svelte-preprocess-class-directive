@@ -46,7 +46,7 @@ function isActive() {
 <div class:font-bold={isActive()} class:text-green-500={isActive()}>...</div>
 ```
 
-This works because it's possible to use multiple `class:` directives in a svelte component. However it makes the code ugly and redundant because the expression is repeated for different classes. And when the styling is done using a [utility-first framework](https://tailwindcss.com/docs/utility-first) (such as Tailwind CSS) it's normal to toggle 5 or 10 classes, not 2.
+This works because it's possible to use multiple `class:` directives in a svelte component. However it makes the code ugly and redundant because the expression is repeated for different classes. When the styling is done using a [utility-first framework](https://tailwindcss.com/docs/utility-first) (such as Tailwind CSS) it's normal to toggle 5 or 10 classes, not 2.
 
 This preprocessor extends the `class:` directive to allow multiple classes to be toggled (depending on one expression):
 

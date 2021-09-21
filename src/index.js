@@ -2,7 +2,6 @@ let SvelteCompiler = require('svelte/compiler');
 let MagicString = require( 'magic-string' );
 
 let options;  // set in the default export
-
 let defaultOptions = {
 	classSeparator: ';',
 	delimiters: ['(', ')'],
@@ -206,7 +205,15 @@ module.exports.sveltePreprocessClassDirective = function sveltePreprocessClassDi
 			//console.log({ filename })
 			//return { code: contentOriginal }
 
-			let ast = SvelteCompiler.parse(contentOriginal); 
+			let ast;
+
+			try {
+				ast = SvelteCompiler.parse(contentOriginal); 	
+			}
+			catch(err) {
+				console.log({ err })
+				return { code: contentOriginal }
+			}
 
 			for(let i = 0; i < ast.html.children.length; i++) {
 				let node = ast.html.children[i];
