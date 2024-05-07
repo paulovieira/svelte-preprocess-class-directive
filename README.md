@@ -64,7 +64,7 @@ function isActive() {
 <div class:font-bold,text-green-500={isActive()}>...</div>
 ```
 
-The previous 2 code snippets are identical when this preprocessor is used, that is, it will convert example 3 into example 2. The preprocessor recognizes that the original class name (`font-bold,text-green-500`) is actually a list of class names (because it has a comma, which is the default separator). The original `class:` directive is splitted into multiple `class:` directives. Because of this all the expected features (such as reactivity) are intact.
+The previous 2 code snippets are identical when this preprocessor is used, that is, it will convert example 3 into example 2. The preprocessor recognizes that the original class name (`font-bold,text-green-500`) is actually a list of class names (because it has a comma, which is the default separator), so the original `class:` directive is splitted into multiple `class:` directives. Because of this all the expected features (such as reactivity) are intact.
 
 
 
