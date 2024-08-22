@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A svelte preprocessor that adds syntactic sugar for multiple css classes in the class directive",
   "main": "src/index.js",
-  "type": "commonjs",
+  "type": "module",
   "directories": {
     "test": "test"
   },
@@ -24,10 +24,9 @@
     "url": "https://github.com/paulovieira/svelte-preprocess-class-directive/issues"
   },
   "homepage": "https://github.com/paulovieira/svelte-preprocess-class-directive#readme",
-  "dependencies": {},
-  "devDependencies": {
-    "magic-string": "0.x.x",
-    "svelte": "3.x.x",
-    "tape": "^5.3.1"
+  "dependencies": {
+    "estree-walker": "^3.0.3",
+    "magic-string": "^0.30.11",
+    "svelte": "^4.2.18"
   }
 }

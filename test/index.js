@@ -1,5 +1,5 @@
 let test = require('tape');
-let { sveltePreprocessClassDirective } = require('..');
+let { sveltePreprocessClassDirective } = require('../index.js');
 
 let trim = s => s.trim();
 
@@ -94,13 +94,13 @@ test('comma separator, with delimiters with a single class', function (t) {
 test('disabling with the special comment', function (t) {
 
 	let input = trim(`
-		<!-- class-directive-disable -->
+		<!-- class-directive-ignore -->
 		<main class:c1,c2={true}>Hello world</main>
 
 	`);
 
 	let expected = trim(`
-		<!-- class-directive-disable -->
+		<!-- class-directive-ignore -->
 		<main class:c1,c2={true}>Hello world</main>
 
 	`)

@@ -1,74 +1,102 @@
-# svelte-preprocess-class-directive
+# svelte-class-directive-extras
 
 A svelte preprocessor that adds syntactic sugar for multiple css classes in the [class directive](https://svelte.dev/docs#class_name).
 
 ## Introduction / motivation
 
-The [class directive](https://svelte.dev/docs#class_name) in svelte can be used to toggle only one css class, depending on some expression:
+The [class directive](https://svelte.dev/docs#class_name) can be used to toggle one css class:
 
-```js
+```svelte
 <script>
 
-// example 1
-
-function isActive() {
-	// ...
-}
+let isActive = false;
+let toggle = () => { isActive = !isActive; }
 
 </script>
 
 <style>
 
 .active {
-	font-weight: 700;
-	color: green;	
+	font-weight: bold;
+	color: red;
+	text-decoration-line: underline;
 }
 
 </style>
 
 
-<div class:active={isActive()}>...</div>
+<div class:active={isActive}>some content</div>
+<button on:click={toggle}>click me</button>
 ```
 
-However in some scenarions it's desirable to toggle two or more classes:
+However sometimes it's necessary to toggle more than one:
 
-```js
+```svelte
 <script>
 
-// example 2
-
-function isActive() {
-	// ...
-}
+let isActive = false;
+let toggle = () => { isActive = !isActive; }
 
 </script>
 
-<div class:font-bold={isActive()} class:text-green-500={isActive()}>...</div>
+<style>
+
+.text-red {
+	color: red;	
+}
+
+.font-bold {
+	font-weight: bold;
+}
+
+.underline {
+	text-decoration-line: underline;
+}
+
+</style>
+
+
+<div class:text-red={isActive} class:font-bold={isActive} class:underline={isActive}>some content</div>
+<button on:click={toggle}>click me</button>
 ```
+
+We can repeat the `class:` directive in the same element, but the simple example above already reveals how ugly this can become.
+
 
 This works because it's possible to use multiple `class:` directives in a svelte component. However it makes the code ugly and redundant because the expression is repeated for different classes. When the styling is done using a [utility-first framework](https://tailwindcss.com/docs/utility-first) (such as Tailwind CSS) it's normal to toggle 5 or 10 classes, not 2.
 
-This preprocessor extends the `class:` directive to allow multiple classes to be toggled (depending on one expression):
+Using this [svelte preprocessor](https://svelte.dev/docs/svelte-compiler#preprocess) the markup code in the example above can be simplified to this:
 
-```js
+```svelte
 <script>
-
-// example 3
-
-function isActive() {
-	// ...
+	/* ... */
 }
-
 </script>
 
-<div class:font-bold,text-green-500={isActive()}>...</div>
+</style>
+	/* ... */
+</style>
+
+<div class:text-red,font-bold,underline={isActive}>some content</div>
+<button on:click={toggle}>click me</button>
 ```
 
-The previous 2 code snippets are identical when this preprocessor is used, that is, it will convert example 3 into example 2. The preprocessor recognizes that the original class name (`font-bold,text-green-500`) is actually a list of class names (because it has a comma, which is the default separator), so the original `class:` directive is splitted into multiple `class:` directives. Because of this all the expected features (such as reactivity) are intact.
+That is, `class:text-red,font-bold,underline={isActive}` is just "syntactic sugar" for `class:text-red={isActive} class:font-bold={isActive} class:underline={isActive}`. The processor will simply replace the original class directive (where the class name is in fact a list of classes) with multiple class directives (one for each class in the list).
 
+A Svelte processor is executed before the compilation, so all the expected features remain intact (namely, reactivity).
 
+## Technical background
 
-Options
+## Installing and adding to the project
+
+## Drawbacks
+
+This warning will be emitted: `Unused CSS selector ".class-a,class-b`.
+
+TODO: how can this be turned off?
+TODO: add a dummy class to the style block?
+
+#Options
 
 Install
 
